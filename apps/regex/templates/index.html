@@ -2,9 +2,57 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>$Title$</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Regular Expression Checker</title>
+  <!-- Подключение Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    /* Стили для центрирования формы */
+    .center-form {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 50vh;
+    }
+  </style>
 </head>
 <body>
-$END$
+
+<div class="container">
+  <!-- Заголовок страницы -->
+  <div class="text-center mt-5">
+    <h1>Проверка регулярных выражений</h1>
+  </div>
+
+  <!-- Форма -->
+  <div class="row center-form">
+    <div class="col-md-6">
+      <form method="POST">
+        {% csrf_token %}
+        <!-- Поле для ввода регулярного выражения -->
+        <div class="form-group">
+          <label for="regexInput">Регулярное выражение:</label>
+          <input type="text" class="form-control" id="regexInput" placeholder="Введите регулярное выражение" name="pattern">
+        </div>
+        <!-- Поле для ввода текста -->
+        <div class="form-group">
+          <label for="textInput">Текст:</label>
+          <textarea class="form-control" id="textInput" rows="5" placeholder="Введите текст для проверки" name="string"></textarea>
+        </div>
+        <!-- Кнопка для запуска проверки -->
+        <button type="submit" class="btn btn-primary">Запустить проверку</button>
+      </form>
+      {% if response %}
+      <div class="mt-3">
+        <strong>Ответ от сервера:</strong>
+        <p>{{ response }}</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<!-- Подключение Bootstrap JS (необходимо для некоторых функций Bootstrap) -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
