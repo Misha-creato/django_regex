@@ -1,35 +1,21 @@
 from django.shortcuts import render
-from .forms import RegexForm
-import re
+from regex.services import RegexMatchService
 
 
 def index_view(request):
     context = {}
+
     if request.method == 'POST':
-        form = RegexForm(request.POST)
-        if form.is_valid():
-            pattern = form.cleaned_data['pattern']
-            string = form.cleaned_data['string']
+        data = request.POST
+        pattern = data['pattern']
+        string = data['string']
 
-            response = 'Текст не найден'
-            match = None
-
-            try:
-                valid_pattern = re.compile(pattern)
-            except re.error:
-                response = 'Регулярное выражение неверно'
-            else:
-                match = valid_pattern.match(string=string)
-
-            if match is not None:
-                response = 'Найдено совпадение'
-
-            context['response'] = response
-
-    else:
-        form = RegexForm()
-
-    context['form'] = form
+        context['response'] = RegexMatchService.check_regex_and_get_response(
+            pattern=pattern,
+            string=string
+        )
+        context['pattern'] = pattern
+        context['string'] = string
 
     return render(
         request=request,
