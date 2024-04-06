@@ -32,12 +32,12 @@
         <!-- Поле для ввода регулярного выражения -->
         <div class="form-group">
           <label for="regexInput">Регулярное выражение:</label>
-          <input type="text" class="form-control" id="regexInput" placeholder="Введите регулярное выражение" name="pattern" required>
+          <input type="text" class="form-control" id="regexInput" placeholder="Введите регулярное выражение" name="pattern" required value="{{pattern}}">
         </div>
         <!-- Поле для ввода текста -->
         <div class="form-group">
           <label for="textInput">Текст:</label>
-          <textarea class="form-control" id="textInput" rows="5" placeholder="Введите текст для проверки" name="string" required></textarea>
+          <textarea class="form-control" id="textInput" rows="5" placeholder="Введите текст для проверки" name="string" required>{{string}}</textarea>
         </div>
         <!-- Кнопка для запуска проверки -->
         <button type="submit" class="btn btn-primary">Запустить проверку</button>
