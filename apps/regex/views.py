@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from regex.services import RegexMatchService
+from regex.services import check_regex_and_get_response
 
 
 def index_view(request):
@@ -10,7 +10,7 @@ def index_view(request):
         pattern = data['pattern']
         string = data['string']
 
-        context['response'] = RegexMatchService.check_regex_and_get_response(
+        context['response'] = check_regex_and_get_response(
             pattern=pattern,
             string=string
         )
