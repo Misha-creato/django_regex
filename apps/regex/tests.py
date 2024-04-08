@@ -1,18 +1,24 @@
+import os
+import json
+
 from django.test import TestCase
-from regex.services import RegexMatchService
-from regex.views import index_view
 from django.urls import reverse
-from regex.fixtures import get_fixtures
+
+from regex.services import check_regex_and_get_response
+
+
+CUR_DIR = os.path.dirname(__file__)
 
 
 class ServiceTests(TestCase):
-    def setUp(self):
-        self.fixtures = get_fixtures()
-        self.service_class = RegexMatchService()
+    @classmethod
+    def setUp(cls):
+        with open(f'{CUR_DIR}/fixtures.json') as file:
+            cls.fixtures = json.load(file)
 
     def test_check_regex_and_get_response(self):
         for fixture in self.fixtures:
-            result = self.service_class.check_regex_and_get_response(
+            result = check_regex_and_get_response(
                 pattern=fixture['pattern'],
                 string=fixture['string'],
             )
@@ -20,10 +26,11 @@ class ServiceTests(TestCase):
 
 
 class IndexViewTests(TestCase):
-    def setUp(self):
-        self.view = index_view
-        self.fixtures = get_fixtures()
-        self.url = reverse(self.view)
+    @classmethod
+    def setUp(cls):
+        with open(f'{CUR_DIR}/fixtures.json') as file:
+            cls.fixtures = json.load(file)
+        cls.url = reverse('index')
 
     def test_form_submission(self):
         for fixture in self.fixtures:
